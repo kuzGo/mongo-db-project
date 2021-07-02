@@ -17,9 +17,54 @@ def mongo_connect(url):
         print("Could not connect to MongoDB:%s") % e
 
 
+def get_record():
+    print("")
+    first = input("Enter first name >")
+    last = input("Enter last name >")
+
+    try:
+        doc = find_one({"first": first.lower(), "last": last.lower()})
+    except:
+        print("Error accessing the database")
+
+    if not doc:
+        print("")
+        print("ERROR!No results found.")
+
+    return doc
+
+
+def add_record():
+    print("")
+    first = input("Enter first name >")
+    last = input("Enter last name >")
+    dob = input("Enter date of birth>")
+    gender = input("Enter gender >")
+    hair_color = input("Enter hair color >")
+    occupation = input("Enter occupation >")
+    nationality = input("Enter nationality >")
+
+    new_doc = {
+        "first": first.lower(),
+        "last": last.lower(),
+        "dob": dob,
+        "gender": gender,
+        "hair_color": hair_color,
+        "occupaton": occupation,
+        "nationality": nationality
+    }
+
+    try:
+        coll.insert(new_doc)
+        print("")
+        print("Documrnt inserted")
+    except:
+        print("Error accessing the database")
+
+
 def show_menu():
     print("")
-    print("1. Add record")
+    add_record()
     print("2. Find a record by name")
     print("3. Edit a record")
     print("4. Delete a record")
